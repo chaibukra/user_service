@@ -20,13 +20,9 @@ async def get_user_by_id(user_id: int) -> Optional[User]:
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_user(user: User):
-    try:
-        user_id = await user_service.create_user(user)
-        return {"message": f"User successfully created - the user id is: {user_id}"}
-    except Exception as ex:
-        raise HTTPException(
-            status_code=404, detail=ex
-        )
+    user_id = await user_service.create_user(user)
+    return {"message": f"User successfully created - the user id is: {user_id}"}
+
 
 
 @router.put("/{user_id}")

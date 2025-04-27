@@ -11,6 +11,8 @@ async def get_by_id(user_id: int) -> Optional[User]:
 
 
 async def create_user(user: User) -> int:
+    if await user_repository.check_if_email_taken(user.email):
+        raise HTTPException(status_code=400, detail=f"The email: {user.email} already taken")
     return await user_repository.create_user(user)
 
 

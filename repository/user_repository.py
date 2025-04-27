@@ -66,3 +66,12 @@ async def register_user_by_id(user_id: int, joining_data: datetime):
     values = {"is_registered": True, "joining_date": joining_data, "user_id": user_id}
 
     await database.execute(query, values=values)
+
+
+async def check_if_email_taken(email: str) -> bool:
+    query = f"SELECT * FROM {TABLE_NAME} WHERE email = :email"
+    result = await database.fetch_one(query, values={"email": email})
+    if result:
+        return True
+    else:
+        return False
